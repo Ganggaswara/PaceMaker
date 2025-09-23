@@ -40,7 +40,7 @@ const HeroSection = ({ currentSlide, setCurrentSlide }) => {
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-30">
               <h2
-                className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[100px] font-serif opacity-70 -mt-8 sm:-mt-12 md:-mt-16 transition-all duration-600 delay-300 ml-2 sm:ml-4 md:ml-8 ease-in-out transform ${
+                className={`text-[100px] md:text-[100px] font-serif opacity-70 -mt-16 transition-all duration-600 delay-300 ml-[20px] ease-in-out transform ${
                   index === currentSlide && isLoaded
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0"
@@ -133,7 +133,7 @@ const HeroSection = ({ currentSlide, setCurrentSlide }) => {
       </button>
 
       {/* Slide Indicators */}
-      <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
         {heroSlides.map((_, index) => (
           <button
             key={index}
