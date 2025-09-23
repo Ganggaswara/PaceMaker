@@ -89,7 +89,7 @@ const Header = ({
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-700 transition-all duration-300 w-full ${
         isHeaderSolid
           ? "bg-black border-b border-gray-700"
           : "bg-black/30 backdrop-blur-md border-b border-gray-800/30"
@@ -98,7 +98,7 @@ const Header = ({
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl mb-[5px] font-black  ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white p-6 rounded-lg shadow-2xl p-6 text-transparent bg-clip-text">
+            <h1 className="text-xl mb-[5px] font-black ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] text-white">
               PaceMaker®
             </h1>
           </div>
@@ -225,7 +225,7 @@ const Header = ({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="border-b border-gray-600 px-4 py-2 focus:outline-none focus:border-white placeholder-gray-500 w-48 mb-[5px]"
+                className="border-b border-gray-300 px-4 py-2 focus:outline-none focus:border-white placeholder-gray-300 w-48 mb-[5px]"
               />
               {searchTerm && (
                 <button
@@ -263,10 +263,7 @@ const Header = ({
                 />
               </svg>
             </button>
-            <button
-              onClick={onCartToggle}
-              className="relative group"
-            >
+            <button onClick={onCartToggle} className="relative group">
               <svg
                 className="w-6 h-6 cursor-pointer mr-2 sm:mr-4 md:mr-8 lg:mr-[80px]"
                 fill="none"
@@ -301,7 +298,7 @@ const Header = ({
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 focus:outline-none focus:border-white placeholder-gray-500"
+              className="w-full bg-gray-900 border-b border-gray-700 px-4 py-3 focus:outline-none focus:border-white placeholder-white"
             />
           </div>
           <nav className="px-4 space-y-4">
