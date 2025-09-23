@@ -40,7 +40,7 @@ const HeroSection = ({ currentSlide, setCurrentSlide }) => {
             />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-30">
               <h2
-                className={`text-[100px] md:text-[100px] font-serif opacity-70 -mt-16 transition-all duration-600 delay-300 ml-[20px] ease-in-out transform ${
+                className={`hero-text text-[100px] md:text-[100px] font-serif opacity-70 -mt-16 transition-all duration-600 delay-300 ml-[20px] ease-in-out transform ${
                   index === currentSlide && isLoaded
                     ? "translate-y-0 opacity-100"
                     : "translate-y-10 opacity-0"

@@ -3,6 +3,35 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+}
+
+/* Mobile responsiveness fixes */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+}
+
+/* Fix for hero section on mobile */
+@media (max-width: 768px) {
+  .hero-text {
+    font-size: clamp(2rem, 8vw, 4rem) !important;
+  }
 }
 
 .logo {

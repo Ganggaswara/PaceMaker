@@ -98,13 +98,13 @@ const Header = ({
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl mb-[5px] font-black  ml-[100px] bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white p-6 rounded-lg shadow-2xl p-6 text-transparent bg-clip-text">
+            <h1 className="text-xl mb-[5px] font-black  ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white p-6 rounded-lg shadow-2xl p-6 text-transparent bg-clip-text">
               PaceMaker®
             </h1>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8 ml-[50px]">
+          <nav className="hidden md:flex space-x-8 ml-2 sm:ml-4 md:ml-8 lg:ml-[50px]">
             <div className="relative mt-[5px]">
               <a
                 href="#products-section"
@@ -268,7 +268,7 @@ const Header = ({
               className="relative group"
             >
               <svg
-                className="w-6 h-6 cursor-pointer mr-[80px]"
+                className="w-6 h-6 cursor-pointer mr-2 sm:mr-4 md:mr-8 lg:mr-[80px]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

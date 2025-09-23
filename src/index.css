@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ensure no horizontal scroll */
+  .container {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Fix for large text in hero */
+  .hero-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+}
