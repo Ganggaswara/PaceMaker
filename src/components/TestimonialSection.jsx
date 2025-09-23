@@ -166,6 +166,13 @@ const TestimonialSection = () => {
               animation: marquee 45s linear infinite;
             }
 
+            /* Mobile specific speed */
+            @media (max-width: 768px) {
+              .animate-marquee {
+                animation-duration: 10s;
+              }
+            }
+
             .pause-marquee:hover {
               animation-play-state: paused;
             }
