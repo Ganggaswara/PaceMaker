@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export const useFilters = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -6,21 +6,21 @@ export const useFilters = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchSubmitted, setIsSearchSubmitted] = useState(false);
 
-  const resetFilters = () => {
+  const resetFilters = useCallback(() => {
     setSelectedCategory('all');
     setSelectedGender('all');
     setSearchTerm('');
     setIsSearchSubmitted(false);
-  };
+  }, []);
 
-  const submitSearch = () => {
+  const submitSearch = useCallback(() => {
     setIsSearchSubmitted(true);
-  };
+  }, []);
 
-  const clearSearch = () => {
+  const clearSearch = useCallback(() => {
     setSearchTerm('');
     setIsSearchSubmitted(false);
-  };
+  }, []);
 
   return {
     selectedCategory,

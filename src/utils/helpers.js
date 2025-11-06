@@ -61,12 +61,3 @@ export const getTotalItems = (cart) => {
 export const getTotalPrice = (cart) => {
   return cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
 };
-
-// Body scroll management
-export const toggleBodyScroll = (isMenuOpen) => {
-  if (isMenuOpen) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = 'unset';
-  }
-};

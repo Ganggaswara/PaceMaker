@@ -23,11 +23,11 @@ export const shoes = [
   {
     id: 1,
     name: 'Nike Alphafly 3 Premium',
-    price: 189.99,
+    price: 190.99,
     category: 'running',
     image: '/images/airZoom.png',
     description: "Men's Road Racing Shoes",
-    rating: 4.8,
+    rating: 4.9,
     isNew: true,
     gender: 'men',
     slug: 'nike-alphafly-3-premium'
@@ -75,7 +75,10 @@ export const shoes = [
     category: 'running',
     image: '/images/alphafly3.png',
     description: "Kid's Road Racing Shoes",
-    slug: 'nike-alphafly-3'
+    slug: 'nike-alphafly-3',
+    isNew: true,
+    gender: 'kids',
+    rating: 4.9,
   },
   {
     id: 6,

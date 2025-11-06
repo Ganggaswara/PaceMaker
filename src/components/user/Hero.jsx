@@ -1,5 +1,5 @@
 import React from "react";
-import { heroSlides } from "../utils/data";
+import { heroSlides } from "../../utils/data";
 
 const HeroSection = ({ currentSlide, setCurrentSlide }) => {
   const [isLoaded, setIsLoaded] = React.useState(false);

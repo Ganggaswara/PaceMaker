@@ -1,5 +1,5 @@
 import React from 'react';
-import { categories } from '../utils/data';
+import { categories } from '../../utils/data';
 
 const CategoryFilter = ({ selectedCategory, setSelectedCategory, onCategorySelect }) => {
   const handleCategoryClick = (categoryId) => {

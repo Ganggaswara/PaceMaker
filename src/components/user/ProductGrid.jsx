@@ -73,13 +73,16 @@ const ProductGrid = ({
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 shadow-lg hover:shadow-2xl transition-all duration-600">
                       <div className="overflow-hidden">
                         <img
-                          src={shoe.image}
+                          src={shoe.image || "/images/placeholder.jpg"}
                           alt={shoe.name}
+                          onError={(e) => {
+                            e.currentTarget.src = "/images/placeholder.jpg";
+                          }}
                           className="w-full h-80 object-cover transform transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:filter group-hover:brightness-110"
                         />
                       </div>
-                      {shoe.isNew && (
-                        <div className="absolute top-4 left-4 bg-gradient-to-b from-[#FF8A65] via-[#81C784] to-[#4FC3F7] text-white px-3 py-1 font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transform transition-transform duration-500 group-hover:scale-110">
+                      {Boolean(shoe.isNew) && (
+                        <div className="absolute top-4 left-4 bg-linear-to-b from-[#FF8A65] via-[#81C784] to-[#4FC3F7] text-white px-3 py-1 font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transform transition-transform duration-500 group-hover:scale-110">
                           NEW
                         </div>
                       )}
@@ -130,8 +133,11 @@ const ProductGrid = ({
                       <div key={shoe.id} className="rounded-lg bg-gray-900/60">
                         <div className="overflow-hidden rounded-lg">
                           <img
-                            src={shoe.image}
+                            src={shoe.image || "/images/placeholder.jpg"}
                             alt={shoe.name}
+                            onError={(e) => {
+                              e.currentTarget.src = "/images/placeholder.jpg";
+                            }}
                             className="w-full h-56 object-cover"
                           />
                         </div>
@@ -139,7 +145,7 @@ const ProductGrid = ({
                     ))}
                   </div>
                   {/* Gradient mask to make it fade into the grid */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+                  <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent"></div>
                   {/* Subtle backdrop blur on top */}
                   <div className="pointer-events-none absolute inset-0 backdrop-blur-sm rounded-2xl"></div>
                 </div>

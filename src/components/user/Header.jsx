@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { getTotalItems } from "../utils/helpers";
+import React, { useState, useContext } from "react";
+import { getTotalItems } from "../../utils/helpers";
+import { UserContext } from "../../layouts/UserLayout";
+import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react";
 
 const Header = ({
   isHeaderSolid,
@@ -14,8 +17,10 @@ const Header = ({
   clearSearch,
   selectedCategory,
   selectedGender,
-  onNewProductsMode,
+  isCheckoutPage = false, // Add this line
+
 }) => {
+  const { setIsNewProductsMode } = React.useContext(UserContext);
   const [isNewClicked, setIsNewClicked] = useState(false);
 
   const handleNavigation = (gender, category) => {
@@ -23,14 +28,10 @@ const Header = ({
     setSelectedCategory(category);
     if (gender === "all" && category === "all") {
       setIsNewClicked(true);
-      if (onNewProductsMode) {
-        onNewProductsMode(true);
-      }
+      setIsNewProductsMode(true); // Set new products mode
     } else {
       setIsNewClicked(false);
-      if (onNewProductsMode) {
-        onNewProductsMode(false);
-      }
+      setIsNewProductsMode(false); // Disable new products mode
     }
     document
       .getElementById("products-section")
@@ -43,20 +44,16 @@ const Header = ({
     // (because 'all' could be from either ALL SHOES or NEW button)
     if (selectedCategory !== "all" || selectedGender !== "all") {
       setIsNewClicked(false);
-      if (onNewProductsMode) {
-        onNewProductsMode(false);
-      }
+      setIsNewProductsMode(false);
     }
-  }, [selectedCategory, selectedGender, onNewProductsMode]);
+  }, [selectedCategory, selectedGender, setIsNewProductsMode]);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchTerm.trim()) {
       submitSearch();
       // Reset NEW clicked state when searching
       setIsNewClicked(false);
-      if (onNewProductsMode) {
-        onNewProductsMode(false);
-      }
+      setIsNewProductsMode(false);
       // Scroll to products section after Enter is pressed
       setTimeout(() => {
         document
@@ -70,9 +67,7 @@ const Header = ({
     clearSearch();
     // Reset states when clearing search
     setIsNewClicked(false);
-    if (onNewProductsMode) {
-      onNewProductsMode(false);
-    }
+    setIsNewProductsMode(false);
   };
 
   // Function to check if a category is active
@@ -87,6 +82,32 @@ const Header = ({
     return false;
   };
 
+  if (isCheckoutPage) {
+    return (
+      <header className="fixed top-0 left-0 right-0 z-40 bg-black/90 backdrop-blur-md">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="text-xl mb-[5px] font-black ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] text-white" >
+            PaceMaker®
+          </Link>
+
+          {/* Cart Button */}
+          <button 
+            onClick={onCartToggle}
+            className="relative p-2 text-white hover:text-blue-400 transition-colors cursor-pointer"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            {cart.length > 0 && (
+              <span className="absolute -top-0 -right-0 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                {cart.reduce((total, item) => total + (item.quantity || 1), 0)}
+              </span>
+            )}
+          </button>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 bg-black border-b border-gray-700 transition-all duration-300 w-full ${
@@ -98,9 +119,11 @@ const Header = ({
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-xl mb-[5px] font-black ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] text-white">
-              PaceMaker®
-            </h1>
+              <Link to="/">
+                <h1 className="text-xl mb-[5px] font-black ml-4 sm:ml-8 md:ml-16 lg:ml-[100px] text-white">
+                PaceMaker®
+                </h1>
+              </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -112,12 +135,12 @@ const Header = ({
                   e.preventDefault();
                   handleNavigation("all", "all");
                 }}
-                className="font-bold text-medium cursor-pointer text-sm bg-gradient-to-r from-[#FF6B6B] via-[#4ECDC4] to-[#45B7D1] text-transparent bg-clip-text hover:opacity-80 transition-colors py-2"
+                className="font-bold text-medium cursor-pointer text-sm bg-linear-to-r from-[#FF6B6B] via-[#4ECDC4] to-[#45B7D1] text-transparent bg-clip-text hover:opacity-80 transition-colors py-2"
               >
                 NEW
               </a>
               {isCategoryActive("all", "all") && (
-                <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF6B6B] via-[#4ECDC4] to-[#45B7D1] rounded-full"></div>
+                <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-linear-to-r from-[#FF6B6B] via-[#4ECDC4] to-[#45B7D1] rounded-full"></div>
               )}
             </div>
 
@@ -263,21 +286,17 @@ const Header = ({
                 />
               </svg>
             </button>
-            <button onClick={onCartToggle} className="relative group">
-              <svg
-                className="w-6 h-6 cursor-pointer mr-2 sm:mr-4 md:mr-8 lg:mr-[80px]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
-            </button>
+            <button 
+            onClick={onCartToggle}
+            className="relative group mr-4 text-white hover:text-blue-400 transition-colors cursor-pointer"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            {cart.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">
+                {cart.reduce((total, item) => total + (item.quantity || 1), 0)}
+              </span>
+            )}
+          </button>
           </div>
         </div>
       </div>

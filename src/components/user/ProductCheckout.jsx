@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductCheckout = ({
   isCheckoutVisible,
@@ -6,11 +7,38 @@ const ProductCheckout = ({
   selectedProduct,
   addToCart,
 }) => {
+  const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = React.useState(null);
 
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
   };
+
+  const handleCheckout = () => {
+    if (selectedSize) {
+      const checkoutItem = {
+        ...selectedProduct,
+        selectedSize,
+        quantity: 1,
+        isDirectCheckout: true,
+      };
+
+      console.log("Saving to localStorage:", checkoutItem);
+      // Simpan produk ke localStorage
+      localStorage.setItem("directCheckoutItem", JSON.stringify(checkoutItem));
+      
+      // Trigger custom event untuk notify Checkout component
+      window.dispatchEvent(new CustomEvent("checkoutItemAdded"));
+      
+      console.log("Navigating to /checkout");
+      // Arahkan ke halaman checkout
+      navigate("/checkout");
+      setIsCheckoutVisible(false);
+    } else {
+      alert("Please select a size first");
+    }
+  };
+
   return (
     <div
       className={`fixed inset-0 z-50 backdrop-blur-sm bg-black/30 transition-all duration-400 ${
@@ -58,7 +86,7 @@ const ProductCheckout = ({
                 className="max-w-full max-h-100 object-contain p-6 transform transition-transform duration-400 hover:scale-110"
               />
               {selectedProduct.isNew && (
-                <div className="absolute top-4 left-4 bg-gradient-to-b from-[#FF8A65] via-[#81C784] to-[#4FC3F7] text-white px-3 py-1 text-xs font-bold uppercase rounded-full">
+                <div className="absolute top-4 left-4 bg-linear-to-b from-[#FF8A65] via-[#81C784] to-[#4FC3F7] text-white px-3 py-1 text-xs font-bold uppercase rounded-full">
                   New Arrival
                 </div>
               )}
@@ -123,8 +151,8 @@ const ProductCheckout = ({
                       onClick={() => handleSizeSelect(size)}
                       className={`cursor-pointer py-2 border rounded-md transition-colors text-sm font-xl ${
                         selectedSize === size
-                          ? "bg-gray-400 text-white border-1 border-black"
-                          : "hover:bg-gray-200 border-1 border-gray-300"
+                          ? "bg-gray-400 text-white border border-black"
+                          : "hover:bg-gray-200 border border-gray-300"
                       }`}
                     >
                       {size}
@@ -150,7 +178,11 @@ const ProductCheckout = ({
                 >
                   Add to Bag
                 </button>
-                <button className="w-full border cursor-pointer border-black text-black py-4 rounded-lg font-bold hover:bg-gray-100 transition-colors">
+                <button
+                  onClick={handleCheckout}
+                  disabled={!selectedSize}
+                  className="cursor-pointer w-full bg-blue-600 text-white py-4 rounded-lg font-bold hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
                   Checkout
                 </button>
               </div>
