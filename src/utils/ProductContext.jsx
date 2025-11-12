@@ -1,6 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "./apiClient";
+import { shoes as fallbackShoes } from "./data";
 
 // Buat konteks
 const ProductContext = createContext();
@@ -16,8 +17,12 @@ export const ProductProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const res = await apiClient.get("/products");
-      return res.data.data;
+      try {
+        const res = await apiClient.get("/products");
+        return res.data?.data ?? [];
+      } catch (_) {
+        return fallbackShoes;
+      }
     },
   });
 

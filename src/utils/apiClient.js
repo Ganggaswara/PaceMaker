@@ -1,13 +1,28 @@
 import axios from "axios";
 
-// const token = localStorage.getItem("token");
-const token = "6|nyDFVgBR7o7So8Ahcjri5wHL8N6vHLjEByN8dW9xd26e8489";
+// Base URL dari env, dukung dua nama variabel agar tidak mismatch
+const BASE_URL =
+  (import.meta?.env?.VITE_API_BASE_URL) ||
+  (import.meta?.env?.VITE_API_URL) ||
+  "http://127.0.0.1:8000/api";
+
 const apiClient = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: BASE_URL,
   headers: {
     Accept: "application/json",
-    Authorization: 'Bearer ' + token,
   },
+});
+
+// Interceptor: jika ada token login di localStorage, override Authorization
+apiClient.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
 });
 
 export default apiClient;
